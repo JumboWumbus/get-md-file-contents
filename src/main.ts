@@ -80,7 +80,7 @@ export async function run() {
       core.debug(`Base path: ${basePath}`);
       core.debug(`File URL = ${fileUrl}`)
 
-      const fileContent = fs.readFile(fileUrl, 'utf8')
+      const fileContent = fs.readFile(articleFile.content, 'utf8')
       const {metadata, content} = parseMD(await fileContent);
 
       core.debug(`Metadata found: ${metadata}`);
