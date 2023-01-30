@@ -84,7 +84,7 @@ export async function run() {
       core.debug(`File URL = ${fileUrl}`);
 
       core.debug('THIS IS IT ITs HAPPENING');
-      const fileContents = fs.readFileSync(fileUrl, 'utf8');
+      const fileContents = await fs.readFileSync(fileUrl, 'utf8');
       const { metadata, content } = parseMD(fileContents);
       core.debug(`OhHhHHH YeaaAAAaaa`);
       core.debug(`Metadata found: ${metadata}`);
