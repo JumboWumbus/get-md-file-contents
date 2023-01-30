@@ -20,4 +20,4 @@ outputs:
 
 runs:
   using: 'node12'
-  main: 'action/mdread.js'
+  main: 'action/index.js'

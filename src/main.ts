@@ -1,16 +1,13 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
+import path from 'path';
 import * as core from '@actions/core';
 import { context, getOctokit } from '@actions/github';
-
-import { promises as fs } from 'fs';
-import parseMD from 'parse-md'
-import path from 'path';
-
-
 import { PushEvent } from '@octokit/webhooks-definitions/schema';
-
 import { AxiosError } from 'axios';
+import { promises as fs } from 'fs';
+
+
 
 type Github = ReturnType<typeof getOctokit>;
 
@@ -27,12 +24,8 @@ async function loadArticleFile(
          ref: context.sha,
       })
    ).data;
-
-   
    const articleFileRegex = new RegExp(`${folderName}\/.*\.md`);
    const mdFiles = commit.files!.filter((f) => articleFileRegex.test(f.filename!));
-
-   core.debug(`FILEPATH: ${articleFileRegex}`)
    core.debug(`Found ${mdFiles.length} markdown files`);
    if (mdFiles.length == 0) {
       throw new Error('No markdown files found');
@@ -84,28 +77,16 @@ export async function run() {
       const basePath = path.dirname(fileUrl).replace('https://', '');
       /* istanbul ignore next */
       core.debug(`Base path: ${basePath}`);
-
-      //parse ARTICLE
-      // const article = parseArticle(articleFile.content, `${basePath}/`);
-
-      const fileContent = fs.readFile(fileUrl, 'utf8')
-      const {metadata, content} = parseMD(await fileContent);
-
-      core.debug(`Metadata found: ${metadata}`);
-      core.debug(`Content found: ${content}`);
-
-      core.setOutput('metadata', metadata);
-      core.setOutput('content', content);
-
-
-
+      core.debug(`File URL = ${fileUrl}`)
    } catch (err) {
       /* istanbul ignore next */
       {
          const axiosErr = err as AxiosError;
          if (axiosErr.response) {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+            
             core.debug(JSON.stringify(axiosErr.response.data));
+            
          }
       }
       core.setFailed(err as Error);
