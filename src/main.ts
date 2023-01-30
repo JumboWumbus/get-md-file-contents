@@ -5,7 +5,7 @@ import * as core from '@actions/core';
 import { context, getOctokit } from '@actions/github';
 import { PushEvent } from '@octokit/webhooks-definitions/schema';
 import { AxiosError } from 'axios';
-import fs from 'fs';
+import { promises as fs } from 'fs';
 import parseMD from 'parse-md';
 
 
@@ -36,7 +36,7 @@ async function loadArticleFile(
 
    const newArticle = mdFiles[0];
    core.debug(`Using ${newArticle.filename!}`);
-   const content = await fs.readFileSync(`./${newArticle.filename!}`, 'utf8');
+   const content = await fs.readFile(`./${newArticle.filename!}`, 'utf8');
    core.debug('Read the md file')
    return { fileName: newArticle.filename!, content };
 }
@@ -84,8 +84,8 @@ export async function run() {
       core.debug(`File URL = ${fileUrl}`);
 
       core.debug('THIS IS IT ITs HAPPENING');
-      const fileContents = await fs.readFileSync(fileUrl, 'utf8');
-      const { metadata, content } = parseMD(fileContents);
+
+      const { metadata, content } = parseMD(articleFile.content);
       core.debug(`OhHhHHH YeaaAAAaaa`);
       core.debug(`Metadata found: ${metadata}`);
       core.debug(`Content found: ${content}`);
