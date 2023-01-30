@@ -5,8 +5,10 @@ import * as core from '@actions/core';
 import { context, getOctokit } from '@actions/github';
 import { PushEvent } from '@octokit/webhooks-definitions/schema';
 import { AxiosError } from 'axios';
-import  fs  from 'fs';
+import fs from 'fs';
 import parseMD from 'parse-md';
+
+
 
 
 
@@ -79,11 +81,12 @@ export async function run() {
       const basePath = path.dirname(fileUrl).replace('https://', '');
       /* istanbul ignore next */
       core.debug(`Base path: ${basePath}`);
-      core.debug(`File URL = ${fileUrl}`)
+      core.debug(`File URL = ${fileUrl}`);
 
-      core.debug('THIS IS IT ITs HAPPENING')
-      const {metadata, content} = parseMD(articleFile.content);
-      core.debug(`OhHhHHH YeaaAAAaaa`)
+      core.debug('THIS IS IT ITs HAPPENING');
+      const fileContents = fs.readFileSync(fileUrl, 'utf8');
+      const { metadata, content } = parseMD(fileContents);
+      core.debug(`OhHhHHH YeaaAAAaaa`);
       core.debug(`Metadata found: ${metadata}`);
       core.debug(`Content found: ${content}`);
 
@@ -91,18 +94,19 @@ export async function run() {
       core.setOutput('content', content);
 
 
- 
+
    } catch (err) {
       /* istanbul ignore next */
       {
          const axiosErr = err as AxiosError;
          if (axiosErr.response) {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-            
+
             core.debug(JSON.stringify(axiosErr.response.data));
-            
+
          }
       }
       core.setFailed(err as Error);
    }
 }
+
