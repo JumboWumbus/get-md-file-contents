@@ -6,6 +6,7 @@ import { context, getOctokit } from '@actions/github';
 import { PushEvent } from '@octokit/webhooks-definitions/schema';
 import { AxiosError } from 'axios';
 import { promises as fs } from 'fs';
+import parseMD from 'parse-md';
 
 
 
@@ -78,6 +79,18 @@ export async function run() {
       /* istanbul ignore next */
       core.debug(`Base path: ${basePath}`);
       core.debug(`File URL = ${fileUrl}`)
+
+      const fileContent = fs.readFile(fileUrl, 'utf8')
+      const {metadata, content} = parseMD(await fileContent);
+
+      core.debug(`Metadata found: ${metadata}`);
+      core.debug(`Content found: ${content}`);
+
+      core.setOutput('metadata', metadata);
+      core.setOutput('content', content);
+
+
+ 
    } catch (err) {
       /* istanbul ignore next */
       {
