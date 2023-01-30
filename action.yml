@@ -1,0 +1,23 @@
+name: Read markdown file content from folder
+author: 'Ben Hammond'
+description: Get the content of a the most recently created markdown file in a folder.
+
+inputs:
+  gh_token:
+    description: 'Github token'
+    required: true
+  articles_folder:
+    description: 'Folder where articles are placed'
+    required: false
+    default: blogs
+
+outputs:
+  metadata:
+    description: 'The metadata within the MD file'
+
+  content:
+    description: 'The content of the MD file'
+
+runs:
+  using: 'node12'
+  main: 'action/mdread.js'
