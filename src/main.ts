@@ -28,9 +28,11 @@ async function loadArticleFile(
       })
    ).data;
 
-
+   
    const articleFileRegex = new RegExp(`${folderName}\/.*\.md`);
    const mdFiles = commit.files!.filter((f) => articleFileRegex.test(f.filename!));
+
+   core.debug(`FILEPATH: ${articleFileRegex}`)
    core.debug(`Found ${mdFiles.length} markdown files`);
    if (mdFiles.length == 0) {
       throw new Error('No markdown files found');
