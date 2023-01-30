@@ -20,4 +20,4 @@ outputs:
 
 runs:
   using: 'node12'
-  main: 'action/index.js'
+  main: 'build/mdfileread.js'

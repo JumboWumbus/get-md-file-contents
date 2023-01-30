@@ -1,4 +1,10 @@
 {
+  "scripts": {
+    "build": "webpack --progress",
+    "lint": "eslint ./src/**/*.ts ./test/**/*.ts",
+    "test": "jest --coverage"
+  },
+
   "dependencies": {
     "@actions/core": "^1.10.0",
     "@actions/exec": "^1.1.1",
@@ -6,14 +12,15 @@
     "@octokit/webhooks-definitions": "^3.67.3",
     "@vercel/ncc": "^0.36.1",
     "axios": "^1.2.6",
+    "handlebars": "^4.7.7",
     "ncc": "^0.3.6",
     "parse-md": "^3.0.3"
   },
   "devDependencies": {
-    "@types/node": "^18.11.18",
     "@octokit/webhooks-definitions": "^3.67.3",
     "@types/jest": "^27.4.0",
     "@types/js-yaml": "^4.0.5",
+    "@types/node": "^18.11.18",
     "@typescript-eslint/eslint-plugin": "^5.9.1",
     "@typescript-eslint/parser": "^5.9.1",
     "eslint": "^8.6.0",
@@ -31,6 +38,8 @@
     "typescript": "^4.5.4",
     "webpack": "^5.66.0",
     "webpack-cli": "^4.9.1"
-
+  },
+  "engines": {
+    "node": ">=11.14.0"
   }
 }
