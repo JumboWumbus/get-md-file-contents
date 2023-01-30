@@ -27,6 +27,8 @@ async function loadArticleFile(
          ref: context.sha,
       })
    ).data;
+
+
    const articleFileRegex = new RegExp(`${folderName}\/.*\.md`);
    const mdFiles = commit.files!.filter((f) => articleFileRegex.test(f.filename!));
    core.debug(`Found ${mdFiles.length} markdown files`);
